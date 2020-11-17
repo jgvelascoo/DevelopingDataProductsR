@@ -1,0 +1,46 @@
+---
+title: "Housing Values in Suburbs of Boston"
+author: "JV"
+date: "16/11/2020"
+output: ioslides_presentation
+smaller: true
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+## Introduction
+Reproducible pitch presentation for the final project of Coursera Developing Data Science Tools course [Data Science Specialization - Course N9]. This document will go over the basics of developing the Shiny app. For more information please see the following links:
+
+1. The Boston Housing Dataset (Boston dataset) can be accessed throught **library(MASS)** in R
+3. The GitHub repository that containing the R codes required to build the Shiny App (**server.R** and **ui.R**) can be accessed [here](https://github.com/jgvelascoo/DevelopingDataProductsR)
+2. The Shiny app can be accessed [here](https://jvelascoo.shinyapps.io/BostonDatasetApp/), which contains
+  - Distribution of each variable throught a histogram
+  - Relationship of up to three variables throught a scatter plot
+
+## The Boston Dataset {.smaller}
+- Use **?Boston** to read more about the study
+```{r, echo = T}
+library(MASS)
+summary(Boston)
+```
+
+## Codes for Histogram {.smaller}
+```{r, echo = T}
+inputVar <- 'medv'; inputBin <- 25; histVal <- Boston[, inputVar]
+hist(histVal, breaks = seq(min(histVal), max(histVal), length.out = inputBin+1),
+     xlab = inputVar, main = paste('Distribution of', inputVar),
+     col = 'darkgray', border = 'white')
+```
+
+## Codes for Scatter Plot {.smaller}
+```{r, echo = T, fig.width=6, fig.height=3.9, fig.align = 'center'}
+library(ggplot2)
+scatX <- 'crim'; scatY <- 'medv'; scatC <- 'age'
+ggplot(data = Boston, aes(x = crim, y = medv, color = age)) + 
+      geom_point() + xlab(scatX) + ylab(scatY) + labs(colour = scatC) +
+      ggtitle(paste('Scatter plot of', scatX, 'vs', scatY)) +
+      theme(plot.title = element_text(hjust = 0.5))
+```
+
